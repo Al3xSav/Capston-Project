@@ -1,0 +1,10 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="margin_padding_small">5dp</dimen>
+    <dimen name="margin_padding_xsmall">8dp</dimen>
+    <dimen name="margin_padding_medium">15dp</dimen>
+    <dimen name="margin_padding_xnormal">20dp</dimen>
+    <dimen name="margin_padding_xxlarge">60dp</dimen>
+    <dimen name="margin_padding_xxxxlarge">100dp</dimen>
+    <dimen name="text_size_xlarge">26sp</dimen>
+</resources>

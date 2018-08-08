@@ -1,0 +1,56 @@
+<resources>
+    <!-- Text Titles -->
+    <string name="app_name">Stay Fit</string>
+    <string name="title_create_workout">Create Workout</string>
+    <string name="title_saved_workout_plan">Saved Workout Plan</string>
+    <string name="title_search_gym">Search Gym</string>
+    <string name="title_activity_find_gym">Search a Gym Nearby</string>
+
+    <!-- Loading Texts -->
+    <string name="fab_desc">Create Button</string>
+
+    <string name="body_parts_title">Select Body Parts</string>
+    <string name="equipments_title">Select Equipments</string>
+    <string name="exercises_title">Select Exercises</string>
+    <string name="save_input_field">Input Workout Plan Title*</string>
+    <string name="save_button_text">Save</string>
+    <string name="cancel_button_text">Cancel</string>
+
+    <!-- Extras -->
+    <string name="workouts_name_extra">workouts_name</string>
+    <string name="exercises_list_extra">exercises_list</string>
+    <string name="images_list_extra">images_list</string>
+    <string name="zoom_level_extra">zoom_level</string>
+    <string name="camera_target_extra">camera_target</string>
+    <string name="create_position_extra">generate_position</string>
+    <string name="input_string_extra">input_string</string>
+    <string name="current_location">current_location</string>
+
+    <!-- JSON Extras -->
+    <string name="categories_json_extra">category_json</string>
+    <string name="equipments_json_extra">equipment_json</string>
+    <string name="exercises_json_extra">exercise_json</string>
+
+    <!-- Menu Prefs -->
+    <string name="add_to_widget">Add to Widget</string>
+    <string name="save_this_workout_plan">Save Workout Plan</string>
+    <string name="delete_this_workout">Delete this Workout Plan</string>
+    <string name="refresh_menu">Refresh</string>
+
+    <!-- Toast Messages -->
+    <string name="toast_saved">Saved</string>
+    <string name="toast_delete">Removed</string>
+    <string name="toast_added_to_widget">Added to Widget</string>
+
+    <!-- Error Messages/ Guides -->
+    <string name="button_hint_exercise">Picture Guide</string>
+    <string name="saved_default_message">Empty Workout Plan</string>
+    <string name="empty_workout">Empty Workout Plan</string>
+
+    <!-- Content Providers Authority -->
+    <string name="workouts_content_authority">com.alexsav.stayfit.workoutsprovider</string>
+    <string name="exercises_content_authority">com.alexsav.stayfit.exercisesprovider</string>
+
+
+
+</resources>
