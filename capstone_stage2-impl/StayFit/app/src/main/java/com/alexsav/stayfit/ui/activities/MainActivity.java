@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         } else if (!isNetworkAvailable(this)) {
-            makeSnackBar(mActivityMainBinding.getRoot(), "Please Check your Internet Connection.\nSwipe to Refresh");
+            makeSnackBar(mActivityMainBinding.getRoot(), getResources().getString(R.string.swipe_message));
             mActivityMainBinding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
@@ -103,10 +103,12 @@ public class MainActivity extends AppCompatActivity {
         mActivityMainBinding.navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
+
+
     void refreshItems(Bundle savedInstanceState) {
 
         if (!isNetworkAvailable(MainActivity.this)) {
-            makeSnackBar(mActivityMainBinding.getRoot(), "Please Check your Internet Connection.\nSwipe to Refresh");
+            makeSnackBar(mActivityMainBinding.getRoot(), getResources().getString(R.string.swipe_message));
             mActivityMainBinding.swipeRefreshLayout.setRefreshing(false);
         } else {
             if (savedInstanceState == null) {
@@ -147,7 +149,11 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastPress > 2000) {
-            onBackPress = Snackbar.make(mActivityMainBinding.getRoot(), "Click back again to exit", Snackbar.LENGTH_SHORT).setAction("Action", null);
+            onBackPress = Snackbar.make(
+                    mActivityMainBinding.getRoot(),
+                    getResources().getString(R.string.click_back),
+                    Snackbar.LENGTH_SHORT).setAction(getResources().getString(R.string.action),
+                    null);
             onBackPress.show();
             lastPress = currentTime;
         } else {

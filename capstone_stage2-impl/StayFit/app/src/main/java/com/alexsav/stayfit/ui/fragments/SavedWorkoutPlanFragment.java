@@ -36,14 +36,6 @@ public class SavedWorkoutPlanFragment extends Fragment
     public RecyclerView.LayoutManager mWorkoutsLayout;
     public Context mContext;
 
-    public SavedWorkoutPlanFragment() {
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -64,6 +56,7 @@ public class SavedWorkoutPlanFragment extends Fragment
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
         Uri workoutUri = WorkoutsProvider.WORKOUT_CONTENT_URI;
+
         return new CursorLoader(
                 getContext(),
                 workoutUri,

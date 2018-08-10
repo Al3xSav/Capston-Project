@@ -5,10 +5,9 @@
     <string name="title_saved_workout_plan">Saved Workout Plan</string>
     <string name="title_search_gym">Search Gym</string>
     <string name="title_activity_find_gym">Search a Gym Nearby</string>
+    <string name="fab_desc">Fab Button</string>
 
-    <!-- Loading Texts -->
-    <string name="fab_desc">Create Button</string>
-
+    <!-- Description Texts and Buttons -->
     <string name="body_parts_title">Select Body Parts</string>
     <string name="equipments_title">Select Equipments</string>
     <string name="exercises_title">Select Exercises</string>
@@ -23,6 +22,9 @@
     <string name="zoom_level_extra">zoom_level</string>
     <string name="camera_target_extra">camera_target</string>
     <string name="create_position_extra">generate_position</string>
+    <string name="create_selected_categories_id_extra">generate_selected_categories_id</string>
+    <string name="create_selected_equipments_id_extra">create_selected_equipments_id</string>
+    <string name="create_selected_exercises_id_extra">create_selected_exercises_id</string>
     <string name="input_string_extra">input_string</string>
     <string name="current_location">current_location</string>
 
@@ -46,10 +48,17 @@
     <string name="button_hint_exercise">Picture Guide</string>
     <string name="saved_default_message">Empty Workout Plan</string>
     <string name="empty_workout">Empty Workout Plan</string>
+    <string name="swipe_message">Please Check your Internet Connection.\nSwipe to Refresh</string>
+    <string name="click_back">Click back again to exit</string>
+    <string name="action">Action</string>
+    <string name="internet_connection_error">Connection Lost.\nPlease Try Again!</string>
 
     <!-- Content Providers Authority -->
     <string name="workouts_content_authority">com.alexsav.stayfit.workoutsprovider</string>
     <string name="exercises_content_authority">com.alexsav.stayfit.exercisesprovider</string>
+
+    <string name="insert_failed">INSERT_FAILED</string>
+    <string name="unknown_function">Unsupported Function!</string>
 
 
 

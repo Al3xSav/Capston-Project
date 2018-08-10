@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-
 import com.alexsav.stayfit.R;
 
 import org.json.JSONArray;
@@ -87,7 +86,7 @@ public class EquipmentsAdapter extends RecyclerView.Adapter<EquipmentsAdapter.Eq
         return equipmentsList.size();
     }
 
-    public void extractJson(String json) {
+    private void extractJson(String json) {
         try {
             JSONArray equipmentsJson = new JSONObject(json).getJSONArray(JSON_RESULTS);
             for (int i = 0; i < equipmentsJson.length(); i++) {

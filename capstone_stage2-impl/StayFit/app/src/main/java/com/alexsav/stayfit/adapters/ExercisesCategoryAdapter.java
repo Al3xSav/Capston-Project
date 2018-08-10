@@ -79,6 +79,8 @@ public class ExercisesCategoryAdapter extends RecyclerView.Adapter<ExercisesCate
                 exercisesCategoryViewHolder.onViewSelected();
             }
         });
+
+
     }
 
     @Override
@@ -86,7 +88,7 @@ public class ExercisesCategoryAdapter extends RecyclerView.Adapter<ExercisesCate
         return categoriesList.size();
     }
 
-    public void extractJson(String json) {
+    private void extractJson(String json) {
         try {
             JSONArray categoriesJson = new JSONObject(json).getJSONArray(JSON_RESULTS);
             for (int i = 0; i < categoriesJson.length(); i++) {
@@ -146,6 +148,9 @@ public class ExercisesCategoryAdapter extends RecyclerView.Adapter<ExercisesCate
                         selectedIdList.remove(i);
                         break;
                     }
+                    /*notifyItemChanged(selectedIdList.get(i));
+                    selectedIdList = getLayoutPosition();
+                    notifyItemChanged(selectedIdList.get(i));*/
                 }
             } else {
                 textHolder.setCardBackgroundColor(context.getResources().getColor(R.color.colorPrimaryDark));

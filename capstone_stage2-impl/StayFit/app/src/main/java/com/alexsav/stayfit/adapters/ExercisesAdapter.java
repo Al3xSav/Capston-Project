@@ -64,13 +64,9 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
 
     @Override
     public void onBindViewHolder(@NonNull ExercisesViewHolder holder, int i) {
-        /*FrameLayout.LayoutParams textParams = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);*/
 
         holder.exercisesId = exercisesList.get(i).getId();
 
-        //holder.nameText.setLayoutParams(textParams);
         holder.nameText.setText(exercisesList.get(i).getName());
         holder.nameText.setTextColor(context.getResources().getColor(R.color.colorButtonText));
         holder.nameText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
@@ -78,7 +74,6 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
         holder.nameText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         holder.nameText.setPadding(10, 15, 10, 10);
 
-        //holder.descriptionText.setLayoutParams(textParams);
         holder.descriptionText.setText(exercisesList.get(i).getDescription());
         holder.descriptionText.setTextColor(context.getResources().getColor(R.color.colorButtonText));
         holder.descriptionText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
@@ -99,7 +94,7 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
         return exercisesList.size();
     }
 
-    public void extractJson(String json) {
+    private void extractJson(String json) {
         try {
             JSONArray exercisesArray = new JSONObject(json).getJSONArray(JSON_RESULTS);
             for (int i = 0; i < exercisesArray.length(); i++) {

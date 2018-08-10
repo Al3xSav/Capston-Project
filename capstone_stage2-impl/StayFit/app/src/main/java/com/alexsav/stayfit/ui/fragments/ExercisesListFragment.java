@@ -23,6 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -35,15 +36,7 @@ public class ExercisesListFragment extends Fragment {
     public FragmentExercisesListBinding mFragmentExercisesListBinding;
     public LinearLayoutManager mWorkoutsLayout;
     public WorkoutDetailsAdapter mWorkoutDetailsAdapter;
-    public ArrayList<Exercises> mExercisesList;
-
-    public ExercisesListFragment() {
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    public static ArrayList<Exercises> mExercisesList;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -59,7 +52,7 @@ public class ExercisesListFragment extends Fragment {
         if (savedInstanceState == null) {
             mFragmentExercisesListBinding.progressBar.setVisibility(View.VISIBLE);
             for (Exercises e : mExercisesList) {
-                new FetchImageUrlsTask().execute(e.getId());
+                new FetchImageUrlsTask(this).execute(e.getId());
             }
         } else {
             mExercisesList = savedInstanceState.getParcelableArrayList(getString(R.string.exercises_list_extra));
@@ -86,7 +79,14 @@ public class ExercisesListFragment extends Fragment {
         mFragmentExercisesListBinding.recyclerViewWorkoutDetails.setAdapter(mWorkoutDetailsAdapter);
     }
 
-    class FetchImageUrlsTask extends AsyncTask<Integer, Void, String> {
+    //AsyncTask for Categories
+    private static class FetchImageUrlsTask extends AsyncTask<Integer, Void, String> {
+        private WeakReference<ExercisesListFragment> fragmentWeakReference;
+
+        private FetchImageUrlsTask(ExercisesListFragment fragmentWeakReference) {
+            this.fragmentWeakReference = new WeakReference<>(fragmentWeakReference);
+        }
+
         @Override
         protected String doInBackground(Integer... integers) {
             try {
@@ -101,8 +101,7 @@ public class ExercisesListFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            mFragmentExercisesListBinding.progressBar.setVisibility(View.GONE);
-
+            fragmentWeakReference.get().mFragmentExercisesListBinding.progressBar.setVisibility(View.GONE);
             try {
                 JSONArray imageUrlArray = new JSONObject(s).getJSONArray(JSON_RESULTS);
                 if (imageUrlArray.length() != 0) {
@@ -116,7 +115,7 @@ public class ExercisesListFragment extends Fragment {
                         }
                     }
                 }
-                setDetailsAdapter();
+                fragmentWeakReference.get().setDetailsAdapter();
             } catch (JSONException e) {
                 e.printStackTrace();
             }

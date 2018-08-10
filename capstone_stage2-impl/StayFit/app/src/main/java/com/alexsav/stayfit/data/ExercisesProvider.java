@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.alexsav.stayfit.R;
+
 public class ExercisesProvider extends ContentProvider {
 
     public static final String PREFIX = "content://";
@@ -17,7 +19,6 @@ public class ExercisesProvider extends ContentProvider {
     public static final Uri EXERCISE_CONTENT_URI =
             URI_BASE.buildUpon().appendPath(DbHelper.EXERCISES_TABLE_NAME).build();
     public static final String UNKNOWN_FUNC = "Unsupported Function!";
-
     public DbHelper dbHelper;
 
     @Override

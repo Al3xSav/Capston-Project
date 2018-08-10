@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_margin="8dp"
+            android:layout_margin="@dimen/margin_padding_xsmall"
             ads:adSize="BANNER"
             ads:adUnitId="@string/ADMOB_AD_UNIT_ID_KEY" />
 

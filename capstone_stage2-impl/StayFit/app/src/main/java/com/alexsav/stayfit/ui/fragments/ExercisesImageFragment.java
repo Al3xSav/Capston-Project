@@ -20,14 +20,6 @@ public class ExercisesImageFragment extends Fragment {
     public ArrayList<String> mExercisesImageList;
     public FragmentExercisesImageBinding mFragmentExercisesImageBinding;
 
-    public ExercisesImageFragment() {
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
