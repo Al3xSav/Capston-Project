@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -31,7 +30,6 @@ import com.alexsav.stayfit.utils.NetworkUtils;
 
 import java.lang.ref.WeakReference;
 import java.net.URL;
-import java.util.ArrayList;
 
 import static com.alexsav.stayfit.utils.ConnectionUtils.isNetworkAvailable;
 import static com.alexsav.stayfit.utils.ConnectionUtils.makeSnackBar;
@@ -51,29 +49,22 @@ public class CreateWorkoutFragment extends Fragment {
     public RecyclerView.Adapter mExercisesAdapter;
 
     public String mCategoriesJson;
-    //public ArrayList<Integer> mCategoriesSelectedItems;
     public String mEquipmentsJson;
-    //public ArrayList<Integer> mEquipmentsSelectedItems;
     public String mExercisesJson;
-    //public ArrayList<Integer> mExercisesSelectedItems;
-
-    /*private final String KEY_RECYCLER_STATE = "recycler_state";
-    private static Bundle mBundleRecyclerViewState;
-    private Parcelable mListState = null;`*/
 
     private AlertDialog.Builder mSaveInputBuilder;
     private EditText mSaveInputField;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, @Nullable Bundle savedInstanceState) {
         mFragmentCreateWorkoutBinding = DataBindingUtil
                 .inflate(inflater, R.layout.fragment_create_workout, container, false);
 
         mContext = container.getContext();
 
-        mCategoriesLayout = new GridLayoutManager(getContext(), 2, LinearLayoutManager.VERTICAL, false);
-        mEquipmentsLayout = new GridLayoutManager(getContext(), 2, LinearLayoutManager.VERTICAL, false);
-        mExercisesLayout = new GridLayoutManager(getContext(), 1, LinearLayoutManager.VERTICAL, false);
+        mCategoriesLayout = new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false);
+        mEquipmentsLayout = new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false);
+        mExercisesLayout = new GridLayoutManager(getActivity(), 1, LinearLayoutManager.VERTICAL, false);
 
         mFragmentCreateWorkoutBinding.recyclerViewMuscles.setLayoutManager(mCategoriesLayout);
         mFragmentCreateWorkoutBinding.recyclerViewMuscles.setHasFixedSize(true);
@@ -119,40 +110,21 @@ public class CreateWorkoutFragment extends Fragment {
         if (savedInstanceState != null) {
             mPosition = savedInstanceState.getInt(getString(R.string.create_position_extra));
             mCategoriesJson = savedInstanceState.getString(getString(R.string.categories_json_extra));
-            //mCategoriesSelectedItems = savedInstanceState.getIntegerArrayList(getString(R.string.create_selected_categories_id_extra));
-            mEquipmentsJson = savedInstanceState.getString(getString(R.string.equipments_json_extra));
-            //mEquipmentsSelectedItems = savedInstanceState.getIntegerArrayList(getString(R.string.create_selected_equipments_id_extra));
-            mExercisesJson = savedInstanceState.getString(getString(R.string.exercises_json_extra));
-            //mExercisesSelectedItems = savedInstanceState.getIntegerArrayList(getString(R.string.create_selected_exercises_id_extra));
 
+            mEquipmentsJson = savedInstanceState.getString(getString(R.string.equipments_json_extra));
+            mExercisesJson = savedInstanceState.getString(getString(R.string.exercises_json_extra));
             String saveString = savedInstanceState.getString(getString(R.string.input_string_extra));
 
-            if (!TextUtils.isEmpty(mCategoriesJson)) {
-                setCategoriesAdapter(mCategoriesJson);
-            }
-            if (!TextUtils.isEmpty(mEquipmentsJson)) {
-                setEquipmentsAdapter(mEquipmentsJson);
-            }
-            if (!TextUtils.isEmpty(mExercisesJson)) {
-                setExercisesAdapter(mExercisesJson);
-            }
+            if (mCategoriesJson != null) { setCategoriesAdapter(mCategoriesJson); }
+            if (mCategoriesJson != null) { setEquipmentsAdapter(mEquipmentsJson); }
+            if (mCategoriesJson != null) { setExercisesAdapter(mExercisesJson); }
+            if (saveString != null) { createSaveDialog(saveString); }
 
-            if (saveString != null) {
-                createSaveDialog(saveString);
-            }
             onPositionView();
         } else {
             resetFragment();
         }
     }
-
-    /*@Override
-    public void onPause() {
-        super.onPause();
-        mBundleRecyclerViewState = new Bundle();
-        mListState = mFragmentCreateWorkoutBinding.recyclerViewMuscles.getLayoutManager().onSaveInstanceState();
-        mBundleRecyclerViewState.putParcelable(KEY_RECYCLER_STATE, mListState);
-    }*/
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
@@ -161,7 +133,6 @@ public class CreateWorkoutFragment extends Fragment {
         outState.putString(getString(R.string.categories_json_extra), mCategoriesJson);
         outState.putString(getString(R.string.equipments_json_extra), mEquipmentsJson);
         outState.putString(getString(R.string.exercises_json_extra), mExercisesJson);
-
 
         if (mSaveInputField != null) {
             outState.putString(getString(R.string.input_string_extra), mSaveInputField.getText().toString());
@@ -220,8 +191,27 @@ public class CreateWorkoutFragment extends Fragment {
         mFragmentCreateWorkoutBinding.progressBar.setVisibility(View.VISIBLE);
         mSaveInputBuilder = null;
         mSaveInputField = null;
-        new FetchCategoriesTask(this).execute();
-        new FetchEquipmentsTask(this).execute();
+        if (mCategoriesJson == null) {
+            try {
+                new FetchCategoriesTask(this).execute();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (mEquipmentsJson == null) {
+            try {
+                new FetchEquipmentsTask(this).execute();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (mExercisesJson == null) {
+            try {
+                new FetchExercisesTask(this).execute();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         onPositionView();
     }
 
@@ -260,17 +250,23 @@ public class CreateWorkoutFragment extends Fragment {
     }
 
     public void setCategoriesAdapter(String json) {
-        mCategoriesAdapter = new ExercisesCategoryAdapter(mContext, json);
+        if (json != null) {
+            mCategoriesAdapter = new ExercisesCategoryAdapter(getActivity(), json);
+        }
         mFragmentCreateWorkoutBinding.recyclerViewMuscles.setAdapter(mCategoriesAdapter);
     }
 
     public void setEquipmentsAdapter(String json) {
-        mEquipmentsAdapter = new EquipmentsAdapter(mContext, json);
+        if (json != null) {
+            mEquipmentsAdapter = new EquipmentsAdapter(getActivity(), json);
+        }
         mFragmentCreateWorkoutBinding.recyclerViewEquipments.setAdapter(mEquipmentsAdapter);
     }
 
     public void setExercisesAdapter(String json) {
-        mExercisesAdapter = new ExercisesAdapter(mContext, json);
+        if (json != null) {
+            mExercisesAdapter = new ExercisesAdapter(getActivity(), json);
+        }
         mFragmentCreateWorkoutBinding.recyclerViewExercisesSelection.setAdapter(mExercisesAdapter);
     }
 
@@ -287,32 +283,34 @@ public class CreateWorkoutFragment extends Fragment {
             super.onPreExecute();
             if (!isNetworkAvailable(fragmentWeakReference.get().mContext)) {
                 fragmentWeakReference.get().mFragmentCreateWorkoutBinding.progressBar.setVisibility(View.VISIBLE);
-                makeSnackBar(fragmentWeakReference.get().mFragmentCreateWorkoutBinding.getRoot(), "Connection Lost.\nPlease Try Again!");
+                makeSnackBar(fragmentWeakReference.get().mFragmentCreateWorkoutBinding.getRoot(),
+                        fragmentWeakReference.get().mContext.getResources().getString(R.string.internet_connection_error));
             } else {
                 fragmentWeakReference.get().mFragmentCreateWorkoutBinding.progressBar.setVisibility(View.GONE);
             }
         }
-            @Override
-            protected String doInBackground (Void...voids){
-                try {
-                    URL categoriesRequestUrl = NetworkUtils.categoriesUrl();
-                    return NetworkUtils.getResponseFromHttpUrl(categoriesRequestUrl);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
-                }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL categoriesRequestUrl = NetworkUtils.categoriesUrl();
+                return NetworkUtils.getResponseFromHttpUrl(categoriesRequestUrl);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "";
             }
+        }
 
-            @Override
-            protected void onPostExecute (String s){
-                super.onPostExecute(s);
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
 
-                fragmentWeakReference.get().mFragmentCreateWorkoutBinding.progressBar.setVisibility(View.GONE);
-                fragmentWeakReference.get().mCategoriesJson = s;
+            fragmentWeakReference.get().mFragmentCreateWorkoutBinding.progressBar.setVisibility(View.GONE);
+            fragmentWeakReference.get().mCategoriesJson = s;
 
-                if (fragmentWeakReference.get() != null && s != null)
-                    fragmentWeakReference.get().setCategoriesAdapter(fragmentWeakReference.get().mCategoriesJson);
-            }
+            if (fragmentWeakReference.get() != null && s != null)
+                fragmentWeakReference.get().setCategoriesAdapter(fragmentWeakReference.get().mCategoriesJson);
+        }
     }
 
     //AsyncTask for Equipments
@@ -328,32 +326,33 @@ public class CreateWorkoutFragment extends Fragment {
             super.onPreExecute();
             if (!isNetworkAvailable(fragmentWeakReference.get().mContext)) {
                 fragmentWeakReference.get().mFragmentCreateWorkoutBinding.progressBar.setVisibility(View.VISIBLE);
-                makeSnackBar(fragmentWeakReference.get().mFragmentCreateWorkoutBinding.getRoot(), "Connection Lost.\nPlease Try Again!");
+                makeSnackBar(fragmentWeakReference.get().mFragmentCreateWorkoutBinding.getRoot(),
+                        fragmentWeakReference.get().mContext.getResources().getString(R.string.internet_connection_error));
             } else {
                 fragmentWeakReference.get().mFragmentCreateWorkoutBinding.progressBar.setVisibility(View.GONE);
             }
         }
 
-            @Override
-            protected String doInBackground(Void... voids) {
-                try {
-                    URL equipmentRequestUrl = NetworkUtils.equipmentsUrl();
-                    return NetworkUtils.getResponseFromHttpUrl(equipmentRequestUrl);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
-                }
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL equipmentRequestUrl = NetworkUtils.equipmentsUrl();
+                return NetworkUtils.getResponseFromHttpUrl(equipmentRequestUrl);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "";
             }
+        }
 
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
 
-                fragmentWeakReference.get().mFragmentCreateWorkoutBinding.progressBar.setVisibility(View.GONE);
-                fragmentWeakReference.get().mEquipmentsJson = s;
+            fragmentWeakReference.get().mFragmentCreateWorkoutBinding.progressBar.setVisibility(View.GONE);
+            fragmentWeakReference.get().mEquipmentsJson = s;
 
-                if (fragmentWeakReference.get() != null && s != null)
-                    fragmentWeakReference.get().setEquipmentsAdapter(fragmentWeakReference.get().mEquipmentsJson);
+            if (fragmentWeakReference.get() != null && s != null)
+                fragmentWeakReference.get().setEquipmentsAdapter(fragmentWeakReference.get().mEquipmentsJson);
         }
     }
 
@@ -371,7 +370,7 @@ public class CreateWorkoutFragment extends Fragment {
             if (!isNetworkAvailable(fragmentWeakReference.get().mContext)) {
                 fragmentWeakReference.get().mFragmentCreateWorkoutBinding.progressBar.setVisibility(View.VISIBLE);
                 makeSnackBar(fragmentWeakReference.get().mFragmentCreateWorkoutBinding.getRoot(),
-                        "Connection Lost.\nPlease Try Again!");
+                        fragmentWeakReference.get().mContext.getResources().getString(R.string.internet_connection_error));
             } else {
                 fragmentWeakReference.get().mFragmentCreateWorkoutBinding.progressBar.setVisibility(View.GONE);
             }
@@ -386,7 +385,7 @@ public class CreateWorkoutFragment extends Fragment {
                 return NetworkUtils.getResponseFromHttpUrl(exerciseRequestUrl);
             } catch (Exception e) {
                 e.printStackTrace();
-                return null;
+                return "";
             }
         }
 

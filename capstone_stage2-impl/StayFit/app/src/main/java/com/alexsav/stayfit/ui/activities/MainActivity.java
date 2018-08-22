@@ -104,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     void refreshItems(Bundle savedInstanceState) {
 
         if (!isNetworkAvailable(MainActivity.this)) {

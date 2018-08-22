@@ -23,17 +23,17 @@ import java.util.ArrayList;
 
 public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.ExercisesViewHolder> {
 
-    public static final String JSON_RESULTS = "results";
-    public static final String JSON_ID = "id";
-    public static final String JSON_NAME = "name";
-    public static final String JSON_DESCRIPTION = "description";
-    public static final String JSON_CATEGORY = "category";
-    public static final String JSON_MUSCLES = "muscles";
-    public static final String JSON_EQUIPMENT = "equipment";
+    private static final String JSON_RESULTS = "results";
+    private static final String JSON_ID = "id";
+    private static final String JSON_NAME = "name";
+    private static final String JSON_DESCRIPTION = "description";
+    private static final String JSON_CATEGORY = "category";
+    private static final String JSON_MUSCLES = "muscles";
+    private static final String JSON_EQUIPMENT = "equipment";
 
     public Context context;
-    public ArrayList<Exercises> exercisesList;
-    public ArrayList<Exercises> selectedExercisesList;
+    private ArrayList<Exercises> exercisesList;
+    private ArrayList<Exercises> selectedExercisesList;
 
     public ExercisesAdapter(Context context, String json) {
         this.context = context;
@@ -57,7 +57,6 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
         exercisesLayout.setRadius(40);
         exercisesLayout.setMaxCardElevation(15);
         exercisesLayout.setCardElevation(8);
-
 
         return new ExercisesViewHolder(exercisesLayout);
     }
@@ -91,7 +90,10 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
 
     @Override
     public int getItemCount() {
-        return exercisesList.size();
+        if (exercisesList != null) {
+            return exercisesList.size();
+        }
+        return 0;
     }
 
     private void extractJson(String json) {
@@ -101,9 +103,7 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
                 int id = exercisesArray.getJSONObject(i).getInt(JSON_ID);
                 String name = exercisesArray.getJSONObject(i).getString(JSON_NAME);
                 String description = Html.fromHtml
-                        (exercisesArray
-                                .getJSONObject(i)
-                                .getString(JSON_DESCRIPTION))
+                        (exercisesArray.getJSONObject(i).getString(JSON_DESCRIPTION))
                         .toString();
 
                 int categories = exercisesArray.getJSONObject(i).getInt(JSON_CATEGORY);
@@ -156,11 +156,11 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
     }
 
     public class ExercisesViewHolder extends RecyclerView.ViewHolder {
-        public int exercisesId;
-        public CardView textHolder;
-        public TextView nameText;
-        public TextView descriptionText;
-        public boolean selectedExercises;
+        private int exercisesId;
+        private CardView textHolder;
+        private TextView nameText;
+        private TextView descriptionText;
+        private boolean selectedExercises;
 
         public ExercisesViewHolder(CardView view) {
             super(view);

@@ -33,10 +33,10 @@ public class ExercisesListFragment extends Fragment {
     public static final String JSON_RESULTS = "results";
     public static final String JSON_EXERCISE = "exercise";
     public static final String JSON_IMAGE = "image";
+    public static ArrayList<Exercises> mExercisesList;
     public FragmentExercisesListBinding mFragmentExercisesListBinding;
     public LinearLayoutManager mWorkoutsLayout;
     public WorkoutDetailsAdapter mWorkoutDetailsAdapter;
-    public static ArrayList<Exercises> mExercisesList;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,

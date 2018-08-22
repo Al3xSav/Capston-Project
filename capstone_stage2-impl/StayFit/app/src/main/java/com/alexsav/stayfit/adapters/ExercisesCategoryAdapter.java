@@ -21,9 +21,9 @@ import java.util.ArrayList;
 
 public class ExercisesCategoryAdapter extends RecyclerView.Adapter<ExercisesCategoryAdapter.ExercisesCategoryViewHolder> {
 
-    public static final String JSON_RESULTS = "results";
-    public static final String JSON_NAME = "name";
-    public static final String JSON_ID = "id";
+    private static final String JSON_RESULTS = "results";
+    private static final String JSON_NAME = "name";
+    private static final String JSON_ID = "id";
 
     public Context context;
     private ArrayList<Pair<Integer, String>> categoriesList;
@@ -79,16 +79,17 @@ public class ExercisesCategoryAdapter extends RecyclerView.Adapter<ExercisesCate
                 exercisesCategoryViewHolder.onViewSelected();
             }
         });
-
-
     }
 
     @Override
     public int getItemCount() {
-        return categoriesList.size();
+        if (categoriesList != null) {
+            return categoriesList.size();
+        }
+        return 0;
     }
 
-    private void extractJson(String json) {
+    public void extractJson(String json) {
         try {
             JSONArray categoriesJson = new JSONObject(json).getJSONArray(JSON_RESULTS);
             for (int i = 0; i < categoriesJson.length(); i++) {
@@ -102,7 +103,6 @@ public class ExercisesCategoryAdapter extends RecyclerView.Adapter<ExercisesCate
 
                 Pair<Integer, String> categoriesPair = new Pair<>(categoriesId, categoriesName);
                 categoriesList.add(categoriesPair);
-
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -126,10 +126,10 @@ public class ExercisesCategoryAdapter extends RecyclerView.Adapter<ExercisesCate
     }
 
     public class ExercisesCategoryViewHolder extends RecyclerView.ViewHolder {
-        public CardView textHolder;
-        public TextView categoriesText;
-        public int categoriesId;
-        public boolean selectedCategories;
+        private CardView textHolder;
+        private TextView categoriesText;
+        private int categoriesId;
+        private boolean selectedCategories;
 
         public ExercisesCategoryViewHolder(CardView view) {
             super(view);
@@ -148,9 +148,6 @@ public class ExercisesCategoryAdapter extends RecyclerView.Adapter<ExercisesCate
                         selectedIdList.remove(i);
                         break;
                     }
-                    /*notifyItemChanged(selectedIdList.get(i));
-                    selectedIdList = getLayoutPosition();
-                    notifyItemChanged(selectedIdList.get(i));*/
                 }
             } else {
                 textHolder.setCardBackgroundColor(context.getResources().getColor(R.color.colorPrimaryDark));

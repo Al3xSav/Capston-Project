@@ -23,11 +23,7 @@ public class NetworkUtils {
 
     // Build Categories Url
     public static URL categoriesUrl() {
-        Uri uri = Uri
-                .parse(WM_BASE_URL)
-                .buildUpon()
-                .appendPath(EXERCISE_CATEGORY)
-                .build();
+        Uri uri = Uri.parse(WM_BASE_URL).buildUpon().appendPath(EXERCISE_CATEGORY).build();
         URL url = null;
         try {
             url = new URL(uri.toString());
@@ -39,11 +35,7 @@ public class NetworkUtils {
 
     // Build Equipments Url
     public static URL equipmentsUrl() {
-        Uri uri = Uri
-                .parse(WM_BASE_URL)
-                .buildUpon()
-                .appendPath(EQUIPMENT)
-                .build();
+        Uri uri = Uri.parse(WM_BASE_URL).buildUpon().appendPath(EQUIPMENT).build();
         URL url = null;
         try {
             url = new URL(uri.toString());
@@ -55,21 +47,14 @@ public class NetworkUtils {
 
     // Build Exercises Url
     public static URL exercisesUrl(ArrayList<Integer> categoriesList, ArrayList<Integer> equipmentsList) {
-        Uri uri = Uri
-                .parse(WM_BASE_URL)
-                .buildUpon()
-                .appendPath(EXERCISE)
-                .appendQueryParameter(LANGUAGE, "2")
-                .build();
-        for (int i = 0; i < categoriesList.size(); i++) {
-            uri = uri
-                    .buildUpon()
+        Uri uri = Uri.parse(WM_BASE_URL).buildUpon().appendPath(EXERCISE).appendQueryParameter(LANGUAGE, "2").build();
+        for (int i : categoriesList) {
+            uri = uri.buildUpon()
                     .appendQueryParameter(EXERCISE_CATEGORY, Integer.toString(i))
                     .build();
         }
-        for (int i = 0; i < equipmentsList.size(); i++) {
-            uri = uri
-                    .buildUpon()
+        for (int i : equipmentsList) {
+            uri = uri.buildUpon()
                     .appendQueryParameter(EQUIPMENT, Integer.toString(i))
                     .build();
         }

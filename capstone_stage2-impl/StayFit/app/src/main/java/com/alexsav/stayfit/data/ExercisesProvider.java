@@ -9,8 +9,6 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.alexsav.stayfit.R;
-
 public class ExercisesProvider extends ContentProvider {
 
     public static final String PREFIX = "content://";

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
 import com.alexsav.stayfit.R;
 
 import org.json.JSONArray;
@@ -20,9 +21,9 @@ import java.util.ArrayList;
 
 public class EquipmentsAdapter extends RecyclerView.Adapter<EquipmentsAdapter.EquipmentsViewHolder> {
 
-    public static final String JSON_RESULTS = "results";
-    public static final String JSON_NAME = "name";
-    public static final String JSON_ID = "id";
+    private static final String JSON_RESULTS = "results";
+    private static final String JSON_NAME = "name";
+    private static final String JSON_ID = "id";
 
     public Context context;
     private ArrayList<Pair<Integer, String>> equipmentsList;
@@ -83,10 +84,13 @@ public class EquipmentsAdapter extends RecyclerView.Adapter<EquipmentsAdapter.Eq
 
     @Override
     public int getItemCount() {
-        return equipmentsList.size();
+        if (equipmentsList != null) {
+            return equipmentsList.size();
+        }
+        return 0;
     }
 
-    private void extractJson(String json) {
+    public void extractJson(String json) {
         try {
             JSONArray equipmentsJson = new JSONObject(json).getJSONArray(JSON_RESULTS);
             for (int i = 0; i < equipmentsJson.length(); i++) {
@@ -99,7 +103,6 @@ public class EquipmentsAdapter extends RecyclerView.Adapter<EquipmentsAdapter.Eq
                         .getInt(JSON_ID);
                 Pair<Integer, String> equipmentsPair = new Pair<>(equipmentsId, equipmentsName);
                 equipmentsList.add(equipmentsPair);
-
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -123,10 +126,10 @@ public class EquipmentsAdapter extends RecyclerView.Adapter<EquipmentsAdapter.Eq
     }
 
     public class EquipmentsViewHolder extends RecyclerView.ViewHolder {
-        public CardView textHolder;
-        public TextView equipmentsText;
-        public int equipmentsId;
-        public boolean selectedEquipments;
+        private CardView textHolder;
+        private TextView equipmentsText;
+        private int equipmentsId;
+        private boolean selectedEquipments;
 
         public EquipmentsViewHolder(CardView view) {
             super(view);

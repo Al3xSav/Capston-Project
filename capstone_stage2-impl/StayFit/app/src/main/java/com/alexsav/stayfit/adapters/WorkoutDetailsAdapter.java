@@ -7,9 +7,11 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
@@ -23,7 +25,7 @@ import java.util.ArrayList;
 public class WorkoutDetailsAdapter extends RecyclerView.Adapter<WorkoutDetailsAdapter.WorkoutDetailsViewHolder> {
 
     public Context context;
-    public ArrayList<Exercises> exercisesList;
+    private ArrayList<Exercises> exercisesList;
 
     public WorkoutDetailsAdapter(Context context, ArrayList<Exercises> exercisesList) {
         this.context = context;
@@ -50,7 +52,7 @@ public class WorkoutDetailsAdapter extends RecyclerView.Adapter<WorkoutDetailsAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull WorkoutDetailsViewHolder holder, final int i) {
+    public void onBindViewHolder(@NonNull final WorkoutDetailsViewHolder holder, int i) {
 
         holder.nameText.setText(exercisesList.get(i).getName());
         holder.nameText.setTextColor(context.getResources().getColor(R.color.colorButtonText));
@@ -62,11 +64,17 @@ public class WorkoutDetailsAdapter extends RecyclerView.Adapter<WorkoutDetailsAd
         holder.descriptionText.setText(exercisesList.get(i).getDescription());
         holder.descriptionText.setTextColor(context.getResources().getColor(R.color.colorButtonText));
         holder.descriptionText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        holder.descriptionText.setPadding(5, 80, 5, 5);
+        holder.descriptionText.setPadding(5, 80, 5, 60);
 
         holder.imageButton.setVisibility(View.GONE);
 
         if (exercisesList.get(i).getImagesUrlList().size() != 0) {
+            FrameLayout.LayoutParams imageParams = new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM
+                    | Gravity.CENTER_HORIZONTAL);
+            imageParams.setMargins(16, 16, 16, 16);
+            holder.imageButton.setLayoutParams(imageParams);
             holder.imageButton.setVisibility(View.VISIBLE);
             holder.imageButton.setText(context.getString(R.string.button_hint_exercise));
             holder.imageButton.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +84,7 @@ public class WorkoutDetailsAdapter extends RecyclerView.Adapter<WorkoutDetailsAd
                     Bundle exercisesInfo = new Bundle();
                     exercisesInfo.putStringArrayList(
                             context.getString(R.string.images_list_extra),
-                            exercisesList.get(i).getImagesUrlList());
+                            exercisesList.get(holder.getAdapterPosition()).getImagesUrlList());
                     exercisesImageFragment.setArguments(exercisesInfo);
                     ((WorkoutDetailsActivity) context).getSupportFragmentManager()
                             .beginTransaction()
@@ -98,10 +106,10 @@ public class WorkoutDetailsAdapter extends RecyclerView.Adapter<WorkoutDetailsAd
     }
 
     public class WorkoutDetailsViewHolder extends RecyclerView.ViewHolder {
-        public CardView textHolder;
-        public TextView nameText;
-        public TextView descriptionText;
-        public Button imageButton;
+        private CardView textHolder;
+        private TextView nameText;
+        private TextView descriptionText;
+        private Button imageButton;
 
         public WorkoutDetailsViewHolder(CardView view) {
             super(view);

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class SavedWorkoutPlanAdapter extends RecyclerView.Adapter<SavedWorkoutPlanAdapter.SavedWorkoutPlanAdapterViewHolder> {
 
     public Context context;
-    public ArrayList<Workouts> workoutPlanList;
+    private ArrayList<Workouts> workoutPlanList;
 
     public SavedWorkoutPlanAdapter(Context context, ArrayList<Workouts> workoutPlanList) {
         this.context = context;
@@ -76,12 +76,15 @@ public class SavedWorkoutPlanAdapter extends RecyclerView.Adapter<SavedWorkoutPl
 
     @Override
     public int getItemCount() {
-        return workoutPlanList.size();
+        if (workoutPlanList != null) {
+            return workoutPlanList.size();
+        }
+        return 0;
     }
 
     public class SavedWorkoutPlanAdapterViewHolder extends RecyclerView.ViewHolder {
-        public CardView workoutPlanLayout;
-        public TextView nameText;
+        private CardView workoutPlanLayout;
+        private TextView nameText;
 
         public SavedWorkoutPlanAdapterViewHolder(CardView view) {
             super(view);

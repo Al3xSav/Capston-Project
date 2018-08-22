@@ -57,9 +57,4 @@
     <string name="workouts_content_authority">com.alexsav.stayfit.workoutsprovider</string>
     <string name="exercises_content_authority">com.alexsav.stayfit.exercisesprovider</string>
 
-    <string name="insert_failed">INSERT_FAILED</string>
-    <string name="unknown_function">Unsupported Function!</string>
-
-
-
 </resources>
