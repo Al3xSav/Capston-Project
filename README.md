@@ -87,4 +87,4 @@ App uses AdMob for banner ads
 
 •	Setup Widget to display given exercises<br/>
 
-<a href="https://drive.google.com/open?id=19848FwfL_zg5-ER29z-Dp94bIsRuJUkJ">StayFit APK</a>
+<a href="https://github.com/Al3xSav/Capstone-Project/blob/master/stayfit.apk">StayFit APK</a>
