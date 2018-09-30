@@ -3,11 +3,20 @@
 
 Stay Fit is an app for passionate in Gym. It provides users a variety of options to use while exercising such as muscle groups, equipment to use, exercises to do with the possibility to save data. This way users can create a weekly schedule plan for the workout. 
 
+<img src="https://github.com/Al3xSav/Capstone-Project/blob/master/screenshots/pixlr.jpg?raw=true" height="500" width="450" /><br/><br/>
+
 In addition, the progress of the workout can be saved so that users return to them during future sessions.
 
 Also, with this app users can search for nearby gyms through Google Maps, instead of worrying to find one.
 
 Data will be pulled from the Workout Manager API. (https://wger.de/en/software/api).
+
+## Screenshots of the App
+
+<img src="https://github.com/Al3xSav/Capstone-Project/blob/master/screenshots/Screenshot_1538322722.png?raw=true" height="500" width="350" /><br/><br/>
+<img src="https://github.com/Al3xSav/Capstone-Project/blob/master/screenshots/Screenshot_1538322895.png?raw=true" height="500" width="350" /><br/><br/>
+<img src="https://github.com/Al3xSav/Capstone-Project/blob/master/screenshots/Screenshot_1538322929.png?raw=true" height="500" width="350" /><br/><br/>
+<img src="https://github.com/Al3xSav/Capstone-Project/blob/master/screenshots/Screenshot_1538322947.png?raw=true" height="500" width="350" /><br/><br/>
 
 ## Features
 
